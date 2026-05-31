@@ -1,1 +1,8 @@
-<Solution />
+<Solution>
+  <Folder Name="/Docs/">
+    <File Path="TcpCongestionWindow.md" />
+  </Folder>
+  <Folder Name="/Solution Items/">
+    <File Path="Readme.md" />
+  </Folder>
+</Solution>
