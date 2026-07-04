@@ -2,7 +2,7 @@
 
 ## 1. What is the TCP Congestion Window?
 
-The **TCP congestion window**, usually called **`cwnd`**, is TCP’s internal limit on **how much data a sender is allowed to have “in flight” before receiving acknowledgements**.
+The **TCP congestion window**, usually called **`cwnd`**, is TCP's internal limit on **how much data a sender is allowed to have "in flight" before receiving acknowledgements**.
 
 In simple terms:
 
@@ -25,7 +25,7 @@ MSS = 1460 bytes
 cwnd = 10 MSS
 
 Sender can have:
-10 × 1460 = 14,600 bytes
+10 x 1460 = 14,600 bytes
 
 in flight before it must wait for ACKs.
 ```
@@ -54,14 +54,14 @@ Because the internet is shared.
 Imagine this path:
 
 ```text
-Your laptop → Router → ISP → Server
+Your laptop -> Router -> ISP -> Server
 ```
 
-There may be limited capacity somewhere in the middle. If every sender transmits at full speed, routers’ buffers fill up, packets get dropped, latency increases, and the network becomes unstable.
+There may be limited capacity somewhere in the middle. If every sender transmits at full speed, routers' buffers fill up, packets get dropped, latency increases, and the network becomes unstable.
 
 So TCP uses `cwnd` to estimate:
 
-> “How much data can I safely push into the network without causing congestion?”
+> "How much data can I safely push into the network without causing congestion?"
 
 That estimate changes dynamically.
 
@@ -77,13 +77,13 @@ TCP sending is limited by two windows:
 actual send limit = min(congestion window, receive window)
 ```
 
-### 4.1 Receive Window — `rwnd`
+### 4.1 Receive Window - `rwnd`
 
 This is controlled by the **receiver**.
 
 It says:
 
-> “This is how much buffer space I have available.”
+> "This is how much buffer space I have available."
 
 Example:
 
@@ -92,13 +92,13 @@ Receiver says: I can accept 64 KB.
 rwnd = 64 KB
 ```
 
-### 4.2 Congestion Window — `cwnd`
+### 4.2 Congestion Window - `cwnd`
 
 This is controlled by the **sender**.
 
 It says:
 
-> “This is how much I believe the network can handle.”
+> "This is how much I believe the network can handle."
 
 Example:
 
@@ -138,7 +138,7 @@ Other end = receiver
 
 The receiver may say:
 
-> “I have a big tank. Send me a lot.”
+> "I have a big tank. Send me a lot."
 
 That is the **receive window**.
 
@@ -146,7 +146,7 @@ But the pipe may be narrow or congested.
 
 The sender says:
 
-> “I will start slowly and increase the flow only if the pipe handles it.”
+> "I will start slowly and increase the flow only if the pipe handles it."
 
 That is the **congestion window**.
 
@@ -160,7 +160,7 @@ TCP increases or decreases `cwnd` based on network feedback.
 
 TCP thinks:
 
-> “Good. The network handled this. I can send more.”
+> "Good. The network handled this. I can send more."
 
 So `cwnd` increases.
 
@@ -168,7 +168,7 @@ So `cwnd` increases.
 
 TCP assumes:
 
-> “The network is congested. I sent too much.”
+> "The network is congested. I sent too much."
 
 So `cwnd` decreases.
 
@@ -194,7 +194,7 @@ Round 5: cwnd = 16 MSS
 
 This is called **slow start**, which is a slightly misleading name because the growth is actually exponential.
 
-The “slow” part means TCP starts cautiously, not that it grows slowly.
+The "slow" part means TCP starts cautiously, not that it grows slowly.
 
 ---
 
@@ -285,7 +285,7 @@ Then it grows again:
 So the sending rate looks like a sawtooth pattern:
 
 ```text
-increase → increase → increase → loss → decrease → increase again
+increase -> increase -> increase -> loss -> decrease -> increase again
 ```
 
 ---
@@ -295,7 +295,7 @@ increase → increase → increase → loss → decrease → increase again
 Your TCP throughput is roughly related to:
 
 ```text
-throughput ≈ cwnd / RTT
+throughput ~ cwnd / RTT
 ```
 
 Where:
@@ -369,7 +369,7 @@ MSS
 TCP congestion algorithm
 ```
 
-So a “1 Gbps network” does not automatically mean one TCP connection will instantly transfer at 1 Gbps.
+So a "1 Gbps network" does not automatically mean one TCP connection will instantly transfer at 1 Gbps.
 
 The congestion window has to grow enough to fill the available pipe.
 
@@ -384,7 +384,7 @@ The congestion window has to grow enough to fill the available pipe.
 Formula:
 
 ```text
-BDP = bandwidth × RTT
+BDP = bandwidth x RTT
 ```
 
 Example:
@@ -404,7 +404,7 @@ Convert:
 So:
 
 ```text
-BDP = 12.5 MB/s × 0.1 s
+BDP = 12.5 MB/s x 0.1 s
 BDP = 1.25 MB
 ```
 
@@ -421,10 +421,10 @@ The **TCP congestion window** is the sender-side limit that decides how much una
 It exists to prevent the sender from overwhelming the network.
 
 ```text
-Small cwnd  → slower sending
-Large cwnd  → faster sending
-Packet loss → cwnd reduced
-ACK success → cwnd increased
+Small cwnd  -> slower sending
+Large cwnd  -> faster sending
+Packet loss -> cwnd reduced
+ACK success -> cwnd increased
 ```
 
 The final send limit is:
@@ -445,11 +445,11 @@ HTTP does **not directly manage the TCP congestion window**.
 
 HTTP says:
 
-> “Send this request and response.”
+> "Send this request and response."
 
 TCP underneath decides:
 
-> “How fast can I safely move these bytes across the network?”
+> "How fast can I safely move these bytes across the network?"
 
 So HTTP is the **application protocol**, and TCP is the **transport protocol** doing reliability, ordering, retransmission, flow control, and congestion control.
 
@@ -530,7 +530,7 @@ Example:
 cwnd = 10 MSS
 MSS  = 1460 bytes
 
-Initial send allowance ≈ 14.6 KB
+Initial send allowance ~ 14.6 KB
 ```
 
 So the server may initially send only around 14 KB, then wait for ACKs.
@@ -572,13 +572,13 @@ The layers below handle that:
 
 ```text
 Your app writes bytes to socket
-        ↓
+        v
 TLS encrypts bytes, if HTTPS
-        ↓
+        v
 TCP splits byte stream into segments
-        ↓
+        v
 IP sends packets
-        ↓
+        v
 Network delivers them
 ```
 
@@ -627,7 +627,7 @@ Maybe the response is only 1 KB.
 If `cwnd` allows 14 KB initially, the whole response fits immediately.
 
 ```text
-Initial cwnd ≈ 14 KB
+Initial cwnd ~ 14 KB
 Response size = 1 KB
 
 Result:
@@ -684,8 +684,8 @@ With HTTP/1.1, browsers usually keep TCP connections alive and reuse them.
 Old style:
 
 ```text
-Request 1 → TCP connection → response → close
-Request 2 → new TCP connection → response → close
+Request 1 -> TCP connection -> response -> close
+Request 2 -> new TCP connection -> response -> close
 ```
 
 Better style with keep-alive:
@@ -693,9 +693,9 @@ Better style with keep-alive:
 ```text
 TCP connection opened once
 
-Request 1 → response
-Request 2 → response
-Request 3 → response
+Request 1 -> response
+Request 2 -> response
+Request 3 -> response
 ```
 
 Why does this matter?
@@ -716,7 +716,7 @@ This is one reason HTTP keep-alive matters.
 
 ---
 
-## 22. The “Cold Start” Problem
+## 22. The "Cold Start" Problem
 
 When a new TCP connection starts, TCP does not know the network capacity yet.
 
@@ -733,8 +733,8 @@ For HTTP, this means the first request on a new connection can be slower, especi
 Example:
 
 ```text
-Client in Sweden → server in us-east-1
-RTT is much higher than Sweden → Frankfurt
+Client in Sweden -> server in us-east-1
+RTT is much higher than Sweden -> Frankfurt
 ```
 
 Higher RTT means each growth round takes longer.
@@ -762,7 +762,7 @@ Suppose your user is in Stockholm and your server is in the US.
 Without CDN:
 
 ```text
-Browser in Stockholm → origin server in us-east-1
+Browser in Stockholm -> origin server in us-east-1
 ```
 
 Long RTT.
@@ -770,8 +770,8 @@ Long RTT.
 With CloudFront:
 
 ```text
-Browser in Stockholm → nearby CloudFront edge
-CloudFront edge → origin server
+Browser in Stockholm -> nearby CloudFront edge
+CloudFront edge -> origin server
 ```
 
 For cached content, the browser talks to a closer server.
@@ -859,9 +859,9 @@ HTTP/3 does **not** use TCP.
 HTTP/3 uses **QUIC**, which runs over UDP.
 
 ```text
-HTTP/1.1 → usually TCP
-HTTP/2   → usually TCP
-HTTP/3   → QUIC over UDP
+HTTP/1.1 -> usually TCP
+HTTP/2   -> usually TCP
+HTTP/3   -> QUIC over UDP
 ```
 
 QUIC still has congestion control, reliability, retransmission, and flow control, but it implements them differently in user space rather than relying on the OS TCP stack.
@@ -876,7 +876,7 @@ If one QUIC stream loses data, it does not necessarily block unrelated streams.
 
 Main point:
 
-> HTTP/1.1 and HTTP/2 depend on TCP’s congestion window. HTTP/3 does not use TCP, but QUIC has its own congestion-control mechanism with similar goals.
+> HTTP/1.1 and HTTP/2 depend on TCP's congestion window. HTTP/3 does not use TCP, but QUIC has its own congestion-control mechanism with similar goals.
 
 ---
 
@@ -1001,13 +1001,13 @@ POST /upload
 Content-Length: 500 MB
 ```
 
-Then the client’s TCP congestion window controls how fast the upload body is sent.
+Then the client's TCP congestion window controls how fast the upload body is sent.
 
 So:
 
 ```text
-server response download → server's sending cwnd matters
-client upload → client's sending cwnd matters
+server response download -> server's sending cwnd matters
+client upload -> client's sending cwnd matters
 ```
 
 The sender always has the congestion window.
@@ -1056,7 +1056,7 @@ client timeout
 
 So when someone says:
 
-> “The API is slow.”
+> "The API is slow."
 
 You should ask:
 
@@ -1125,8 +1125,8 @@ That is the relationship.
 ## 33. Example: Small JSON API
 
 ```text
-Client → GET /api/products/123
-Server → 2 KB JSON response
+Client -> GET /api/products/123
+Server -> 2 KB JSON response
 ```
 
 The response fits in the initial congestion window.
@@ -1151,8 +1151,8 @@ serialization
 ## 34. Example: Large File Download
 
 ```text
-Client → GET /downloads/report.zip
-Server → 500 MB response
+Client -> GET /downloads/report.zip
+Server -> 500 MB response
 ```
 
 Now the bottlenecks may include:
@@ -1177,7 +1177,7 @@ Here TCP congestion behavior matters a lot.
 Suppose Service A calls Service B inside the same AWS region/VPC:
 
 ```text
-Service A → Service B
+Service A -> Service B
 ```
 
 RTT is very low.
@@ -1194,7 +1194,7 @@ throughput is usually good
 Now compare cross-region:
 
 ```text
-Service A in eu-north-1 → Service B in us-east-1
+Service A in eu-north-1 -> Service B in us-east-1
 ```
 
 RTT is much higher.
@@ -1320,7 +1320,7 @@ Each call waits for the previous one
 If RTT is 100 ms, even before processing time:
 
 ```text
-50 × 100 ms = 5 seconds minimum
+50 x 100 ms = 5 seconds minimum
 ```
 
 Better:
