@@ -1,7 +1,9 @@
 <Solution>
   <Folder Name="/Docs/">
+    <File Path="docker.md" />
     <File Path="Docs/BandwidthDelayProduct.md" />
     <File Path="Docs/TcpCongestionWindow.md" />
+    <File Path="Docs/PromptEngineering/BiasVaguenessOverload.md" />
     <File Path="Docs/PromptEngineering/Readme.md" />
   </Folder>
   <Folder Name="/Solution Items/">

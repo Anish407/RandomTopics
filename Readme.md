@@ -18,6 +18,10 @@ How would I explain it clearly in a design review?
 ### AI
 
 - [Prompt engineering vs context engineering](./Docs/PromptEngineering/Readme.md)
+- [Bias, vagueness, and overload in prompt engineering](./Docs/PromptEngineering/BiasVaguenessOverload.md)
+
+### Docker
+- [How Docker works internally](./Docs/DockerInternals.md)
 
 ### Networking
 
