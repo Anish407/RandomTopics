@@ -21,7 +21,7 @@ How would I explain it clearly in a design review?
 - [Bias, vagueness, and overload in prompt engineering](./Docs/PromptEngineering/BiasVaguenessOverload.md)
 
 ### Docker
-- [How Docker works](./Docs/Docker.md)
+- [How Docker works](./Docker.md)
 
 ### Networking
 
