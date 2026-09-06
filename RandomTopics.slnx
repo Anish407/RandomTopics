@@ -1,6 +1,7 @@
 <Solution>
   <Folder Name="/Docs/">
     <File Path="certificates.md" />
+    <File Path="cpuvsGpu.md" />
     <File Path="docker.md" />
     <File Path="Docs/BandwidthDelayProduct.md" />
     <File Path="Docs/TcpCongestionWindow.md" />

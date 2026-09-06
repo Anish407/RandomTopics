@@ -19,6 +19,7 @@ How would I explain it clearly in a design review?
 
 - [Prompt engineering vs context engineering](./Docs/PromptEngineering/Readme.md)
 - [Bias, vagueness, and overload in prompt engineering](./Docs/PromptEngineering/BiasVaguenessOverload.md)
+- [why do we need GPUs](./cpuvsGpu.md)
 
 ### Docker
 - [How Docker works](./docker.md)
