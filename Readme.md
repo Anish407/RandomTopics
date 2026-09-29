@@ -21,6 +21,7 @@ How would I explain it clearly in a design review?
 - [Bias, vagueness, and overload in prompt engineering](./Docs/PromptEngineering/BiasVaguenessOverload.md)
 - [why do we need GPUs](./cpuvsGpu.md)
  - [OllavsVLLM notes](./Docs/PromptEngineering/ollavsvllm.md)
+ - [How an LLM Predicts the Next Token](./llm_next_token_prediction_README.md)
 
 ### Docker
 - [How Docker works](./docker.md)
