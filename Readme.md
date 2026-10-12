@@ -22,6 +22,7 @@ How would I explain it clearly in a design review?
 - [why do we need GPUs](./cpuvsGpu.md)
  - [OllavsVLLM notes](./Docs/PromptEngineering/ollavsvllm.md)
  - [How an LLM Predicts the Next Token](./llm_next_token_prediction_README.md)
+ - [How Tokenization, Embeddings, and LLMs Work](./tokenization.md)
 
 ### Docker
 - [How Docker works](./docker.md)
