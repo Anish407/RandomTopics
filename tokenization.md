@@ -122,18 +122,75 @@ Embedding: [ 0.21 -0.34  0.76]
 
 In a neural-network implementation, an embedding layer efficiently performs this lookup for all token IDs in the input.
 
-## 4. Does an embedding mean the model “understands” a word?
+## 4. Apple the fruit vs. Apple the iPhone company: how context changes meaning
 
-**Partly, but the meaning is more complicated.** The initial embedding is a learned starting representation for a token. Consider:
+**Your intuition is right, with an important correction about the order of operations:** the tokenizer produces token IDs first; the model looks up their initial embeddings **before** the transformer uses attention. The transformer does **not** decide which embedding row to retrieve by interpreting the word's meaning.
 
-- “I ate an apple.”
-- “Apple released a new iPhone.”
+Consider two sentences (lowercase *apple* is deliberate here):
 
-If the same token ID is used for `apple` in both sentences, its **initial token embedding** is the same. But the sentences convey different meanings.
+1. **"I ate an apple."** — Here, *apple* is a fruit.
+2. **"I bought an apple phone."** — Here, *apple* refers to the company that makes the iPhone.
 
-The **transformer layers** use surrounding tokens and attention to produce different **contextual representations**. That is how the model can respond differently to *apple the fruit* and *Apple the company*.
+If both sentences contain the **exact same token** for ` apple` (including its leading space), the tokenizer assigns it the **same token ID** in both sentences. The model retrieves the **same initial embedding vector** from the same row of its embedding matrix. Other tokens around it are different, so the context is different.
 
-Also, knowledge is **not stored only in the embedding matrix**. The model contains many other learned parameters: attention projection matrices, feed-forward layers, and output projection weights. Information is distributed across these parameters.
+**Important nuance:** Tokenizers often distinguish capitalization, leading spaces, and different text fragments. `apple` and `Apple` are **not guaranteed** to have the same ID; a word may also split into multiple tokens. The same-ID claim applies to an **identical token in the same encoding**, not to every spelling or occurrence of a word.
+
+### The precise sequence
+
+```text
+"I ate an apple."                "I bought an apple phone."
+         |                                  |
+    Tokenizer                            Tokenizer
+         |                                  |
+ Token IDs, including                Token IDs, including
+   ID for " apple"                     ID for " apple"
+         |                                  |
+         +----------- same ID -------------+
+                         |
+                    Embedding lookup
+                         |
+              Same INITIAL vector for
+                 this token ID
+                         |
+             Transformer layers use
+             attention + other learned
+             transformations WITH CONTEXT
+                       /   \
+                      v     v
+                Fruit-related   Company-related
+                  contextual      contextual
+                representation  representation
+```
+
+This diagram is conceptual: each **full sentence** goes through the model independently. Its contextual representation for the ` apple` token can differ between the sentences, even when the initial embedding is identical.
+
+### What attention actually does
+
+Self-attention allows each token's representation (subject to the model's attention mask) to draw on relevant information from other tokens. In a causal language model, a position attends to **earlier tokens and itself**, not future tokens. Other learned transformations, including feed-forward layers, also contribute to the changing representations.
+
+The transformer does **not** normally choose between a permanent "fruit embedding" and "company embedding" stored as separate rows for one identical token ID. It progressively computes **contextual hidden-state vectors** that reflect the text around a token. Meaning is also distributed throughout the model's learned weights, not exclusively in the input embedding matrix.
+
+### Try it with `tiktoken`
+
+```python
+import tiktoken
+
+enc = tiktoken.get_encoding("cl100k_base")
+
+for sentence in ["I ate an apple.", "I bought an apple phone."]:
+    ids = enc.encode(sentence)
+    pieces = [enc.decode_single_token_bytes(i) for i in ids]
+    print(sentence)
+    print(list(zip(ids, pieces)))
+
+# Demonstrate that capitalization can produce different IDs:
+print("apple:", enc.encode(" apple"))
+print("Apple:", enc.encode(" Apple"))
+```
+
+Inspect the decoded pieces and IDs to confirm the actual boundaries in the chosen encoding. This script shows **tokenization only**; it does not run a transformer or compute contextual embeddings.
+
+**In one sentence:** Same token ID → same initial embedding row; different sentence context → potentially different contextual representation after transformer processing.
 
 ## 5. How does training create the numbers?
 
