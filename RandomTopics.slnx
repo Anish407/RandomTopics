@@ -8,6 +8,7 @@
     <File Path="Docs/PromptEngineering/BiasVaguenessOverload.md" />
     <File Path="Docs/PromptEngineering/Readme.md" />
     <File Path="llmnexttokenprediction.md" />
+    <File Path="NeuralNetworks.md" />
     <File Path="ollamavsvllm.md" />
     <File Path="tokenization.md" />
     <File Path="transformer_basics_guide.md" />
