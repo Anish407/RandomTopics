@@ -10,6 +10,7 @@
     <File Path="llmnexttokenprediction.md" />
     <File Path="ollamavsvllm.md" />
     <File Path="tokenization.md" />
+    <File Path="transformer_basics_guide.md" />
   </Folder>
   <Folder Name="/Solution Items/">
     <File Path="Readme.md" />
